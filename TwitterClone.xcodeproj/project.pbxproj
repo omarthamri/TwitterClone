@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		482106D12AFD99ED004BCD12 /* TweetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 482106D02AFD99ED004BCD12 /* TweetTableViewCell.swift */; };
 		48256B322AFD4E5B00551C0C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48256B312AFD4E5B00551C0C /* HomeViewController.swift */; };
 		48256B342AFD4E8800551C0C /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48256B332AFD4E8800551C0C /* SearchViewController.swift */; };
 		48256B362AFD4E9600551C0C /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48256B352AFD4E9600551C0C /* NotificationsViewController.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		482106D02AFD99ED004BCD12 /* TweetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetTableViewCell.swift; sourceTree = "<group>"; };
 		48256B312AFD4E5B00551C0C /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		48256B332AFD4E8800551C0C /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		48256B352AFD4E9600551C0C /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
@@ -102,6 +104,14 @@
 			path = Core;
 			sourceTree = "<group>";
 		};
+		48256B392AFD594400551C0C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				482106D02AFD99ED004BCD12 /* TweetTableViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		48B4A6B02AFD4C470035A6EC = {
 			isa = PBXGroup;
 			children = (
@@ -125,6 +135,7 @@
 		48B4A6BB2AFD4C470035A6EC /* TwitterClone */ = {
 			isa = PBXGroup;
 			children = (
+				48256B392AFD594400551C0C /* Views */,
 				48256B2F2AFD4E2800551C0C /* Controllers */,
 				48B4A6BC2AFD4C470035A6EC /* AppDelegate.swift */,
 				48B4A6BE2AFD4C470035A6EC /* SceneDelegate.swift */,
@@ -289,6 +300,7 @@
 				48256B382AFD4EA300551C0C /* DirectMessageViewController.swift in Sources */,
 				48B4A6BF2AFD4C470035A6EC /* SceneDelegate.swift in Sources */,
 				48256B322AFD4E5B00551C0C /* HomeViewController.swift in Sources */,
+				482106D12AFD99ED004BCD12 /* TweetTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
