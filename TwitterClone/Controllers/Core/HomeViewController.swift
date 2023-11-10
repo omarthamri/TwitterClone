@@ -9,17 +9,17 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
-    let timelineTableView: UITableView = {
+    lazy var timelineTableView: UITableView = {
        let tableView = UITableView()
         tableView.register(TweetTableViewCell.self, forCellReuseIdentifier: TweetTableViewCell.identifier)
+        tableView.delegate = self
+        tableView.dataSource = self
         return tableView
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(timelineTableView)
-        timelineTableView.delegate = self
-        timelineTableView.dataSource = self
     }
     
     override func viewWillLayoutSubviews() {
@@ -37,7 +37,33 @@ extension HomeViewController: UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: TweetTableViewCell.identifier, for: indexPath) as? TweetTableViewCell else { return UITableViewCell() }
+        cell.delegate = self
+        cell.selectionStyle = .none
         return cell
     }
+    
+}
+
+
+extension HomeViewController: TweetTableViewCellDelegate {
+    func tweetTableViewCellDidTapReply() {
+        print("reply")
+    }
+    
+    func tweetTableViewCellDidTapRetweet() {
+        print("tweet")
+    }
+    
+    func tweetTableViewCellDidTapLike() {
+        print("like")
+    }
+    
+    func tweetTableViewCellDidTapShare() {
+        print("share")
+    }
+    
+    
+    
+    
     
 }
