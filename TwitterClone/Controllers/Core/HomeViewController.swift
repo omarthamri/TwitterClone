@@ -25,6 +25,23 @@ class HomeViewController: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         timelineTableView.frame = view.frame
+        configureNavigationBar()
+    }
+    
+    private func configureNavigationBar() {
+        let size: CGFloat = 36
+        let logoImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: size, height: size))
+        logoImageView.image = UIImage(named: "twitter_logo")
+        logoImageView.contentMode = .scaleAspectFill
+        let middleView = UIView(frame: CGRect(x: 0, y: 0, width: size, height: size))
+        middleView.addSubview(logoImageView)
+        navigationItem.titleView = middleView
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person"), style: .plain, target: self, action: #selector(profileTapped))
+    }
+    
+    @objc func profileTapped() {
+        let vc = ProfileViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
 
 }
