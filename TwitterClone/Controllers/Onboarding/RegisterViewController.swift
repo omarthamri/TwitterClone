@@ -6,9 +6,13 @@
 //
 
 import UIKit
+import Combine
 
 
 class RegisterViewController: UIViewController {
+    
+    private var viewModel = RegisterViewModel()
+    private var subscriptions: Set<AnyCancellable> = []
     
     private let registerTitleLabel: UILabel = {
        let label = UILabel()
@@ -49,6 +53,7 @@ class RegisterViewController: UIViewController {
         button.layer.cornerRadius = 25
         button.layer.masksToBounds = true
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.isEnabled = false
         return button
     }()
     
@@ -60,6 +65,31 @@ class RegisterViewController: UIViewController {
         view.addSubview(passwordTextField)
         view.addSubview(registerButton)
         configureConstraints()
+        bindViews()
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapToDismiss)))
+    }
+    
+    @objc func didTapToDismiss() {
+        view.endEditing(true)
+    }
+    
+    private func bindViews() {
+        emailTextField.addTarget(self, action: #selector(didChangeEmailField), for: .editingChanged)
+        passwordTextField.addTarget(self, action: #selector(didChangePasswordField), for: .editingChanged)
+        viewModel.$isRegistrationFormValid.sink { [weak self] validationState in
+            self?.registerButton.isEnabled = validationState
+        }
+        .store(in: &subscriptions)
+    }
+    
+    @objc private func didChangeEmailField() {
+        viewModel.email = emailTextField.text
+        viewModel.validateRegistrationForm()
+    }
+    
+    @objc private func didChangePasswordField() {
+        viewModel.password = passwordTextField.text
+        viewModel.validateRegistrationForm()
     }
     
     private func configureConstraints() {
