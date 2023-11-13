@@ -43,11 +43,12 @@ class OnboardingViewController: UIViewController {
         return label
     }()
     
-    private let loginButton: UIButton = {
+    private lazy var loginButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Login", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 14)
         button.tintColor = UIColor(red: 29/255, green: 161/255, blue: 242/255, alpha: 1)
+        button.addTarget(self, action: #selector(didTapLogin), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -93,5 +94,9 @@ class OnboardingViewController: UIViewController {
         navigationController?.pushViewController(regitrationViewController, animated: true)
     }
     
+    @objc private func didTapLogin() {
+        let loginViewController = LoginViewController()
+        navigationController?.pushViewController(loginViewController, animated: true)
+    }
     
 }

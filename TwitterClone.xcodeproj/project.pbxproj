@@ -25,6 +25,7 @@
 		4854D3202B0133FE0065A8C6 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 4854D31F2B0133FE0065A8C6 /* FirebaseStorage */; };
 		4854D3222B0133FE0065A8C6 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 4854D3212B0133FE0065A8C6 /* FirebaseStorageCombine-Community */; };
 		4854D3252B0135900065A8C6 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4854D3242B0135900065A8C6 /* OnboardingViewController.swift */; };
+		4859D0602B02ABF500D8668D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4859D05F2B02ABF500D8668D /* LoginViewController.swift */; };
 		4883A8102AFED4AD00ABFA31 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4883A80F2AFED4AD00ABFA31 /* ProfileViewController.swift */; };
 		4883A8122AFEF5DD00ABFA31 /* ProfileTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4883A8112AFEF5DD00ABFA31 /* ProfileTableViewHeader.swift */; };
 		48B4A6BD2AFD4C470035A6EC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B4A6BC2AFD4C470035A6EC /* AppDelegate.swift */; };
@@ -65,6 +66,7 @@
 		48326C192B01997F00F7E2E9 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		4854D30E2B01334D0065A8C6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4854D3242B0135900065A8C6 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		4859D05F2B02ABF500D8668D /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		4883A80F2AFED4AD00ABFA31 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		4883A8112AFEF5DD00ABFA31 /* ProfileTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewHeader.swift; sourceTree = "<group>"; };
 		48B4A6B92AFD4C470035A6EC /* TwitterClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwitterClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -168,6 +170,7 @@
 			children = (
 				4854D3242B0135900065A8C6 /* OnboardingViewController.swift */,
 				48D154762B0154AB006F0D14 /* RegisterViewController.swift */,
+				4859D05F2B02ABF500D8668D /* LoginViewController.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -382,6 +385,7 @@
 				48256B342AFD4E8800551C0C /* SearchViewController.swift in Sources */,
 				48326C1A2B01997F00F7E2E9 /* AuthManager.swift in Sources */,
 				48B4A6C12AFD4C470035A6EC /* MainTabbarController.swift in Sources */,
+				4859D0602B02ABF500D8668D /* LoginViewController.swift in Sources */,
 				48B4A6BD2AFD4C470035A6EC /* AppDelegate.swift in Sources */,
 				48D154772B0154AB006F0D14 /* RegisterViewController.swift in Sources */,
 				48256B362AFD4E9600551C0C /* NotificationsViewController.swift in Sources */,
