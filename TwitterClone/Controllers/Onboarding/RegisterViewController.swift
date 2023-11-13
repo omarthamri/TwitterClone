@@ -44,7 +44,7 @@ class RegisterViewController: UIViewController {
         return textField
     }()
     
-    private let registerButton: UIButton = {
+    private lazy var registerButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Create account", for: .normal)
         button.tintColor = .white
@@ -54,6 +54,7 @@ class RegisterViewController: UIViewController {
         button.layer.masksToBounds = true
         button.translatesAutoresizingMaskIntoConstraints = false
         button.isEnabled = false
+        button.addTarget(self, action: #selector(didTapRegister), for: .touchUpInside)
         return button
     }()
     
@@ -80,6 +81,10 @@ class RegisterViewController: UIViewController {
             self?.registerButton.isEnabled = validationState
         }
         .store(in: &subscriptions)
+        viewModel.$user.sink { [weak self] user in
+            print(user)
+        }
+        .store(in: &subscriptions)
     }
     
     @objc private func didChangeEmailField() {
@@ -90,6 +95,10 @@ class RegisterViewController: UIViewController {
     @objc private func didChangePasswordField() {
         viewModel.password = passwordTextField.text
         viewModel.validateRegistrationForm()
+    }
+    
+    @objc func didTapRegister() {
+        viewModel.registerUser()
     }
     
     private func configureConstraints() {
