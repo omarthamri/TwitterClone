@@ -6,10 +6,12 @@
 //
 
 import UIKit
-
+import Combine
 
 class LoginViewController: UIViewController {
     
+    private var viewModel = AuthentificationViewModel()
+    private var subscriptions: Set<AnyCancellable> = []
     private let loginTitleLabel: UILabel = {
        let label = UILabel()
        label.text = "Login to your account"
@@ -51,7 +53,7 @@ class LoginViewController: UIViewController {
         button.layer.masksToBounds = true
         button.translatesAutoresizingMaskIntoConstraints = false
         button.isEnabled = false
-       // button.addTarget(self, action: #selector(didTapRegister), for: .touchUpInside)
+        button.addTarget(self, action: #selector(didTapLogin), for: .touchUpInside)
         return button
     }()
     
@@ -62,7 +64,49 @@ class LoginViewController: UIViewController {
         view.addSubview(emailTextField)
         view.addSubview(passwordTextField)
         view.addSubview(loginButton)
+        bindViews()
         configureConstraints()
+    }
+    
+    @objc private func didTapLogin() {
+        viewModel.loginUser()
+    }
+    
+    private func bindViews() {
+        emailTextField.addTarget(self, action: #selector(didChangeEmailField), for: .editingChanged)
+        passwordTextField.addTarget(self, action: #selector(didChangePasswordField), for: .editingChanged)
+        viewModel.$isAuthentificationFormValid.sink { [weak self] validationState in
+            self?.loginButton.isEnabled = validationState
+        }
+        .store(in: &subscriptions)
+        viewModel.$user.sink { [weak self] user in
+            guard user != nil else { return }
+            guard let vc = self?.navigationController?.viewControllers.first as? OnboardingViewController else { return }
+            vc.dismiss(animated: true)
+        }
+        .store(in: &subscriptions)
+        viewModel.$error.sink { [weak self] errorString in
+            guard let error = errorString else { return }
+            self?.presentAlert(error: error)
+        }
+        .store(in: &subscriptions)
+    }
+    
+    private func presentAlert(error: String) {
+        let alert = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
+        let okButton = UIAlertAction(title: "Ok", style: .default)
+        alert.addAction(okButton)
+        present(alert, animated: true)
+    }
+    
+    @objc private func didChangeEmailField() {
+        viewModel.email = emailTextField.text
+        viewModel.validateAuthentificationForm()
+    }
+    
+    @objc private func didChangePasswordField() {
+        viewModel.password = passwordTextField.text
+        viewModel.validateAuthentificationForm()
     }
     
     private func configureConstraints() {

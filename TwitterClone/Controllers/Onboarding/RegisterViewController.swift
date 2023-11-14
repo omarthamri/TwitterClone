@@ -11,7 +11,7 @@ import Combine
 
 class RegisterViewController: UIViewController {
     
-    private var viewModel = RegisterViewModel()
+    private var viewModel = AuthentificationViewModel()
     private var subscriptions: Set<AnyCancellable> = []
     
     private let registerTitleLabel: UILabel = {
@@ -78,7 +78,7 @@ class RegisterViewController: UIViewController {
     private func bindViews() {
         emailTextField.addTarget(self, action: #selector(didChangeEmailField), for: .editingChanged)
         passwordTextField.addTarget(self, action: #selector(didChangePasswordField), for: .editingChanged)
-        viewModel.$isRegistrationFormValid.sink { [weak self] validationState in
+        viewModel.$isAuthentificationFormValid.sink { [weak self] validationState in
             self?.registerButton.isEnabled = validationState
         }
         .store(in: &subscriptions)
@@ -88,16 +88,28 @@ class RegisterViewController: UIViewController {
             vc.dismiss(animated: true)
         }
         .store(in: &subscriptions)
+        viewModel.$error.sink { [weak self] errorString in
+            guard let error = errorString else { return }
+            self?.presentAlert(error: error)
+        }
+        .store(in: &subscriptions)
+    }
+    
+    private func presentAlert(error: String) {
+        let alert = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
+        let okButton = UIAlertAction(title: "Ok", style: .default)
+        alert.addAction(okButton)
+        present(alert, animated: true)
     }
     
     @objc private func didChangeEmailField() {
         viewModel.email = emailTextField.text
-        viewModel.validateRegistrationForm()
+        viewModel.validateAuthentificationForm()
     }
     
     @objc private func didChangePasswordField() {
         viewModel.password = passwordTextField.text
-        viewModel.validateRegistrationForm()
+        viewModel.validateAuthentificationForm()
     }
     
     @objc func didTapRegister() {
