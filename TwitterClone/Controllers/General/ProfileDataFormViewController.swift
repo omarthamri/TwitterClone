@@ -74,9 +74,24 @@ class ProfileDataFormViewController: UIViewController {
         textView.layer.cornerRadius = 8
         textView.textContainerInset = .init(top: 15, left: 15, bottom: 15, right: 15)
         textView.text = "Tell the world about yourself"
+        textView.font = .systemFont(ofSize: 16)
         textView.textColor = .gray
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
+    }()
+    
+    private let submitButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("submit", for: .normal)
+        button.tintColor = .white
+        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
+        button.layer.masksToBounds = true
+        button.clipsToBounds = true
+        button.layer.cornerRadius = 25
+        button.backgroundColor = UIColor(red: 29/255, green: 161/255, blue: 242/255, alpha: 1)
+        button.isEnabled = false
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
     override func viewDidLoad() {
@@ -88,8 +103,17 @@ class ProfileDataFormViewController: UIViewController {
         scrollView.addSubview(displayNameTextField)
         scrollView.addSubview(userNameTextField)
         scrollView.addSubview(bioTextView)
+        scrollView.addSubview(submitButton)
         configureConstraints()
         isModalInPresentation = true
+        displayNameTextField.delegate = self
+        userNameTextField.delegate = self
+        bioTextView.delegate = self
+        view.addGestureRecognizer(UIGestureRecognizer(target: self, action: #selector(didTapToDismiss)))
+    }
+    
+    @objc private func didTapToDismiss() {
+        view.endEditing(true)
     }
     
     private func configureConstraints() {
@@ -121,11 +145,54 @@ class ProfileDataFormViewController: UIViewController {
             userNameTextField.topAnchor.constraint(equalTo: displayNameTextField.bottomAnchor,constant: 20),
             userNameTextField.heightAnchor.constraint(equalToConstant: 50)
         ]
+        let bioTextViewConstraints = [
+            bioTextView.leadingAnchor.constraint(equalTo: displayNameTextField.leadingAnchor),
+            bioTextView.trailingAnchor.constraint(equalTo: displayNameTextField.trailingAnchor),
+            bioTextView.topAnchor.constraint(equalTo: userNameTextField.bottomAnchor, constant: 20),
+            bioTextView.heightAnchor.constraint(equalToConstant: 150)
+        ]
+        let submitButtonConstraints = [
+            submitButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            submitButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            submitButton.heightAnchor.constraint(equalToConstant: 50),
+            submitButton.bottomAnchor.constraint(equalTo: view.keyboardLayoutGuide.topAnchor, constant: -20)
+        ]
         NSLayoutConstraint.activate(scrollViewConstraints)
         NSLayoutConstraint.activate(hintLabelConstraints)
         NSLayoutConstraint.activate(avatarPlaceholderImageViewConstraints)
         NSLayoutConstraint.activate(displayNameTextFieldConstraints)
         NSLayoutConstraint.activate(userNameTextFieldConstraints)
+        NSLayoutConstraint.activate(bioTextViewConstraints)
+        NSLayoutConstraint.activate(submitButtonConstraints)
+    }
+    
+}
+
+
+extension ProfileDataFormViewController: UITextViewDelegate,UITextFieldDelegate {
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        scrollView.setContentOffset(CGPoint(x: 0, y: textView.frame.origin.y - 100), animated: true)
+        if textView.textColor == .gray {
+            textView.textColor = .label
+            textView.text = ""
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+        if textView.text.isEmpty {
+            textView.text = "Tell the world about yourself"
+            textView.textColor = .gray
+        }
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        scrollView.setContentOffset(CGPoint(x: 0, y: textField.frame.origin.y - 100), animated: true)
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
     }
     
 }
