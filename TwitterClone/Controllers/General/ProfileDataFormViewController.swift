@@ -80,7 +80,7 @@ class ProfileDataFormViewController: UIViewController {
         return textView
     }()
     
-    private let submitButton: UIButton = {
+    private lazy var submitButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("submit", for: .normal)
         button.tintColor = .white
@@ -91,6 +91,7 @@ class ProfileDataFormViewController: UIViewController {
         button.backgroundColor = UIColor(red: 29/255, green: 161/255, blue: 242/255, alpha: 1)
         button.isEnabled = false
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(submitBtnTapped), for: .touchUpInside)
         return button
     }()
     
@@ -138,6 +139,10 @@ class ProfileDataFormViewController: UIViewController {
     
     @objc private func didTapToDismiss() {
         view.endEditing(true)
+    }
+    
+    @objc private func submitBtnTapped() {
+        viewModel.uploadAvatar()
     }
     
     @objc private func didTapToUpload() {

@@ -42,6 +42,7 @@
 		48B4A6DE2AFD4C4A0035A6EC /* TwitterCloneUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B4A6DD2AFD4C4A0035A6EC /* TwitterCloneUITests.swift */; };
 		48B4A6E02AFD4C4A0035A6EC /* TwitterCloneUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B4A6DF2AFD4C4A0035A6EC /* TwitterCloneUITestsLaunchTests.swift */; };
 		48D154772B0154AB006F0D14 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D154762B0154AB006F0D14 /* RegisterViewController.swift */; };
+		48FE947E2B063E47000928E3 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48FE947D2B063E47000928E3 /* StorageManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +93,7 @@
 		48B4A6DD2AFD4C4A0035A6EC /* TwitterCloneUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterCloneUITests.swift; sourceTree = "<group>"; };
 		48B4A6DF2AFD4C4A0035A6EC /* TwitterCloneUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterCloneUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		48D154762B0154AB006F0D14 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		48FE947D2B063E47000928E3 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +176,7 @@
 			children = (
 				48326C192B01997F00F7E2E9 /* AuthManager.swift */,
 				4847A9A62B03B8A90033FCBC /* DatabaseManager.swift */,
+				48FE947D2B063E47000928E3 /* StorageManager.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -408,6 +411,7 @@
 				48256B342AFD4E8800551C0C /* SearchViewController.swift in Sources */,
 				48ACB5ED2B03FE3A004B5B1E /* HomeViewModel.swift in Sources */,
 				48326C1A2B01997F00F7E2E9 /* AuthManager.swift in Sources */,
+				48FE947E2B063E47000928E3 /* StorageManager.swift in Sources */,
 				48B4A6C12AFD4C470035A6EC /* MainTabbarController.swift in Sources */,
 				4859D0602B02ABF500D8668D /* LoginViewController.swift in Sources */,
 				4847A9A72B03B8A90033FCBC /* DatabaseManager.swift in Sources */,
