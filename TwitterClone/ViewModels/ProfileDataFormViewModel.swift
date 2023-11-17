@@ -20,7 +20,7 @@ final class ProfileDataFormViewModel: ObservableObject {
     @Published var imageData: UIImage?
     @Published var isFormValid: Bool = false
     @Published var error: String = ""
-    @Published var url: URL?
+    @Published var isOnBoardingFinished: Bool = false
     private var subscriptions: Set<AnyCancellable> = []
     
     func validateUserProfileForm() {
@@ -47,11 +47,41 @@ final class ProfileDataFormViewModel: ObservableObject {
                 StorageManager.shared.getDownloadURL(for: metadata.path )
             })
             .sink { [weak self] completion in
-                if case .failure(let error) = completion {
+                switch completion {
+                case .failure(let error):
+                    print(error)
                     self?.error = error.localizedDescription
+                case .finished:
+                    self?.uploadUserData()
                 }
             } receiveValue: { [weak self] url in
-                self?.url = url
+                self?.avatarPath = url.absoluteString
+            }
+            .store(in: &subscriptions)
+
+    }
+    
+    private func uploadUserData() {
+        guard let displayName,
+              let username,
+              let bio,
+              let avatarPath,
+              let id = Auth.auth().currentUser?.uid else { return }
+        let udpatedFields: [String: Any] = [
+            "displayName": displayName,
+            "username": username,
+            "bio": bio,
+            "avatarPath": avatarPath,
+            "isUserOnBoarded": true
+        ]
+        DatabaseManager.shared.collectionUser(updateFields: udpatedFields, for: id)
+            .sink { [weak self] completion in
+                if case .failure(let error) = completion {
+                    print(error)
+                    self?.error = error.localizedDescription
+                }
+            } receiveValue: { [weak self] onBoardingState in
+                self?.isOnBoardingFinished = onBoardingState
             }
             .store(in: &subscriptions)
 
