@@ -6,11 +6,14 @@
 //
 
 import UIKit
+import Combine
+import SDWebImage
 
 
 class ProfileViewController: UIViewController {
     
     private var isstatusBarHidden: Bool = true
+    private var viewModel = ProfileViewModel()
     
     private let statusBar: UIView = {
         let view = UIView()
@@ -27,12 +30,14 @@ class ProfileViewController: UIViewController {
        return table
     }()
     
+    private lazy var profileTableViewHeader = ProfileTableViewHeader(frame: CGRect(x: 0, y: 0, width: profileTableView.bounds.width, height: 380))
+    private var subscriptions: Set<AnyCancellable> = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         navigationItem.title = "Profile"
         view.addSubview(profileTableView)
-        let profileTableViewHeader = ProfileTableViewHeader(frame: CGRect(x: 0, y: 0, width: profileTableView.bounds.width, height: 380))
         profileTableView.delegate = self
         profileTableView.dataSource = self
         profileTableView.tableHeaderView = profileTableViewHeader
@@ -40,6 +45,26 @@ class ProfileViewController: UIViewController {
         navigationController?.navigationBar.isHidden = true
         view.addSubview(statusBar)
         configureConstraints()
+        bindViews()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.retrieveUser()
+    }
+    
+    private func bindViews() {
+        viewModel.$twitterUser.sink { [weak self] twitterUser in
+            guard let twitterUser = twitterUser else { return }
+            self?.profileTableViewHeader.displayNameLabel.text = twitterUser.displayName
+            self?.profileTableViewHeader.userNameLabel.text = "@\(twitterUser.username)"
+            self?.profileTableViewHeader.userBioLabel.text = twitterUser.bio
+            self?.profileTableViewHeader.joinDateLabel.text = "\(twitterUser.createdOn)"
+            self?.profileTableViewHeader.followersCountLabel.text = "\(twitterUser.followersCount)"
+            self?.profileTableViewHeader.followingCountLabel.text = "\(twitterUser.followingCount)"
+            self?.profileTableViewHeader.profileAvatarImageView.sd_setImage(with: URL(string: twitterUser.avatarPath))
+        }
+        .store(in: &subscriptions)
     }
     
     private func configureConstraints() {

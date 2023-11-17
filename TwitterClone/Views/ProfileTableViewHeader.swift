@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import SDWebImage
 
 class ProfileTableViewHeader: UIView {
     
@@ -72,46 +72,42 @@ class ProfileTableViewHeader: UIView {
         return stackView
     }()
     
-    private let profileAvatarImageView: UIImageView = {
+    var profileAvatarImageView: UIImageView = {
        let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "person")
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = 40
-        imageView.backgroundColor = .yellow
+        imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
-    private let userNameLabel: UILabel = {
+     var userNameLabel: UILabel = {
        let label = UILabel()
-        label.text = "@WandaMaximov"
         label.font = .systemFont(ofSize: 18, weight: .regular)
         label.textColor = .secondaryLabel
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    private let displayNameLabel: UILabel = {
+     var displayNameLabel: UILabel = {
        let label = UILabel()
-        label.text = "Wanda Maximov"
         label.font = .systemFont(ofSize: 22, weight: .bold)
         label.textColor = .label
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    private let userBioLabel: UILabel = {
+    var userBioLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 3
-        label.text = "The strongest and cutest Avenger"
         label.textColor = .label
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    private let profileHeaderImageView: UIImageView = {
+    var profileHeaderImageView: UIImageView = {
        let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -128,18 +124,15 @@ class ProfileTableViewHeader: UIView {
         return imageView
     }()
     
-    private let joinDateLabel: UILabel = {
+    var joinDateLabel: UILabel = {
        let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Joined April 4, 2014"
         label.textColor = .secondaryLabel
         label.font = .systemFont(ofSize: 14, weight: .regular)
         return label
     }()
-    
-    private let followingCountLabel: UILabel = {
+    var followingCountLabel: UILabel = {
        let label = UILabel()
-        label.text = "314"
         label.textColor = .label
         label.font = .systemFont(ofSize: 14, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -155,9 +148,8 @@ class ProfileTableViewHeader: UIView {
         return label
     }()
     
-    private let followersCountLabel: UILabel = {
+    var followersCountLabel: UILabel = {
        let label = UILabel()
-        label.text = "1M"
         label.textColor = .label
         label.font = .systemFont(ofSize: 14, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
