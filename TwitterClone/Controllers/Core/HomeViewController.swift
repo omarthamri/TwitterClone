@@ -21,11 +21,27 @@ class HomeViewController: UIViewController {
         tableView.dataSource = self
         return tableView
     }()
+    
+    private lazy var composeTweetButton: UIButton = {
+        let button = UIButton(type: .system,primaryAction: UIAction{ [weak self] _ in
+            self?.navigateToTweetComposer()
+        })
+        button.backgroundColor = .twitterBlueColor
+        button.tintColor = .white
+        let plusSign = UIImage(systemName: "plus",withConfiguration: UIImage.SymbolConfiguration(pointSize: 18, weight: .bold))
+        button.setImage(plusSign, for: .normal)
+        button.layer.cornerRadius = 30
+        button.clipsToBounds = true
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(timelineTableView)
+        view.addSubview(composeTweetButton)
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "rectangle.portrait.and.arrow.right"), style: .plain, target: self, action: #selector(didTapSignOut))
+        configureConstraints()
         bindViews()
     }
     
@@ -48,6 +64,12 @@ class HomeViewController: UIViewController {
         }
     }
     
+    private func navigateToTweetComposer() {
+        let vc = UINavigationController(rootViewController: TweetComposeViewController())
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
@@ -68,6 +90,16 @@ class HomeViewController: UIViewController {
             }
         }
         .store(in: &subscriptions)
+    }
+    
+    private func configureConstraints() {
+        let composeTweetButtonConstraints = [
+            composeTweetButton.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -25),
+            composeTweetButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -120),
+            composeTweetButton.widthAnchor.constraint(equalToConstant: 60),
+            composeTweetButton.heightAnchor.constraint(equalToConstant: 60)
+        ]
+        NSLayoutConstraint.activate(composeTweetButtonConstraints)
     }
     
     private func configureNavigationBar() {

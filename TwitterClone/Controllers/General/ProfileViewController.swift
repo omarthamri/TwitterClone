@@ -59,7 +59,7 @@ class ProfileViewController: UIViewController {
             self?.profileTableViewHeader.displayNameLabel.text = twitterUser.displayName
             self?.profileTableViewHeader.userNameLabel.text = "@\(twitterUser.username)"
             self?.profileTableViewHeader.userBioLabel.text = twitterUser.bio
-            self?.profileTableViewHeader.joinDateLabel.text = "\(twitterUser.createdOn)"
+            self?.profileTableViewHeader.joinDateLabel.text = "Joined \(String(describing: self?.viewModel.getFormattedDate(with: twitterUser.createdOn) ?? ""))"
             self?.profileTableViewHeader.followersCountLabel.text = "\(twitterUser.followersCount)"
             self?.profileTableViewHeader.followingCountLabel.text = "\(twitterUser.followingCount)"
             self?.profileTableViewHeader.profileAvatarImageView.sd_setImage(with: URL(string: twitterUser.avatarPath))

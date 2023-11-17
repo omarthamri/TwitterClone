@@ -88,7 +88,7 @@ class ProfileDataFormViewController: UIViewController {
         button.layer.masksToBounds = true
         button.clipsToBounds = true
         button.layer.cornerRadius = 25
-        button.backgroundColor = UIColor(red: 29/255, green: 161/255, blue: 242/255, alpha: 1)
+        button.backgroundColor = UIColor.twitterBlueColor
         button.isEnabled = false
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(submitBtnTapped), for: .touchUpInside)
