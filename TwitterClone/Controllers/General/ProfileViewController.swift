@@ -65,6 +65,12 @@ class ProfileViewController: UIViewController {
             self?.profileTableViewHeader.profileAvatarImageView.sd_setImage(with: URL(string: twitterUser.avatarPath))
         }
         .store(in: &subscriptions)
+        viewModel.$tweets.sink { [weak self] _ in
+            DispatchQueue.main.async {
+                self?.profileTableView.reloadData()
+            }
+        }
+        .store(in: &subscriptions)
     }
     
     private func configureConstraints() {
@@ -90,11 +96,12 @@ class ProfileViewController: UIViewController {
 extension ProfileViewController: UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return viewModel.tweets.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: TweetTableViewCell.identifier, for: indexPath) as? TweetTableViewCell else { return UITableViewCell() }
+        cell.configureTweet(with: viewModel.tweets[indexPath.row].author.displayName, username: viewModel.tweets[indexPath.row].author.username, tweetContent: viewModel.tweets[indexPath.row].tweetContent, avatarPath: viewModel.tweets[indexPath.row].author.avatarPath)
         return cell
     }
     

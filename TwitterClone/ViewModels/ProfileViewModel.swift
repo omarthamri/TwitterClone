@@ -13,12 +13,16 @@ import Firebase
 final class ProfileViewModel: ObservableObject {
     
     @Published var twitterUser: TwitterUser?
+    @Published var tweets: [Tweet] = []
     @Published var error: String?
     private var subscriptions: Set<AnyCancellable> = []
     
     func retrieveUser() {
         guard let id = Auth.auth().currentUser?.uid else { return }
         DatabaseManager.shared.collectionUser(retrieve: id)
+            .handleEvents(receiveOutput: { [weak self] _ in
+                self?.fetchTweets(id: id)
+            })
             .sink { [weak self] completion in
                 if case .failure(let error) = completion {
                     self?.error = error.localizedDescription
@@ -34,5 +38,18 @@ final class ProfileViewModel: ObservableObject {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM YYYY"
         return dateFormatter.string(from: date)
+    }
+    
+    func fetchTweets(id: String) {
+        DatabaseManager.shared.collectionTweets(retrieveTweets: id)
+            .sink { [weak self] completion in
+                if case .failure(let error) = completion {
+                    self?.error = error.localizedDescription
+                }
+            } receiveValue: { [weak self] retrievedTweets in
+                self?.tweets = retrievedTweets
+            }
+            .store(in: &subscriptions)
+
     }
 }

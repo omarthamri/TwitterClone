@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 
 protocol TweetTableViewCellDelegate: AnyObject {
@@ -29,14 +30,12 @@ class TweetTableViewCell: UITableViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.masksToBounds = true
         imageView.clipsToBounds = true
-        imageView.image = UIImage(systemName: "person")
         imageView.backgroundColor = .red
         return imageView
     }()
     
     private let displayNameLabel: UILabel = {
        let label = UILabel()
-        label.text = "Wanda Maximov"
         label.font = .systemFont(ofSize: 18, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
        return label
@@ -44,7 +43,6 @@ class TweetTableViewCell: UITableViewCell {
     
     private let usernameLabel: UILabel = {
        let label = UILabel()
-        label.text = "@WandaMaximov"
         label.textColor = .secondaryLabel
         label.font = .systemFont(ofSize: 16, weight: .regular)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -54,7 +52,6 @@ class TweetTableViewCell: UITableViewCell {
     private let tweetTextContentLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "I'm the strongest and cutest avenger...If you don't agree then you've been watching another movie because there is no other explanation possible :D"
         label.numberOfLines = 0
         return label
     }()
@@ -104,6 +101,13 @@ class TweetTableViewCell: UITableViewCell {
         contentView.addSubview(shareButton)
         configureConstraints()
         configureButtons()
+    }
+    
+    func configureTweet(with displayName: String,username: String,tweetContent: String,avatarPath: String) {
+        displayNameLabel.text = displayName
+        usernameLabel.text = "@\(username)"
+        tweetTextContentLabel.text = tweetContent
+        avatarImageView.sd_setImage(with: URL(string: avatarPath))
     }
     
     private func configureConstraints() {

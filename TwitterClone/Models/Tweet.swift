@@ -11,6 +11,7 @@ struct Tweet: Codable {
     
     let id: String = UUID().uuidString
     let author: TwitterUser
+    let authorId: String
     let tweetContent: String
     var likesCount: Int
     var likers: [String]
